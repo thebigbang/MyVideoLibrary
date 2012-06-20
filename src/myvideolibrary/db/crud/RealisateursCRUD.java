@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
-import myvideolibrary.db.entity.Films;
+import myvideolibrary.db.entity.Film;
 import myvideolibrary.db.entity.Genre;
 import myvideolibrary.db.entity.Realisateur;
 
@@ -39,14 +39,14 @@ public class RealisateursCRUD {
     }
     
     /**@deprecated   */
-     public List<Films> getFilms(Long id) {
+     public List<Film> getFilms(Long id) {
         try {
             CriteriaBuilder criteraiBuilder = manager.getCriteriaBuilder();
-            CriteriaQuery<Films> query = criteraiBuilder.createQuery(Films.class);
+            CriteriaQuery<Film> query = criteraiBuilder.createQuery(Film.class);
             
             List<Predicate> pre = new ArrayList<Predicate>();
             
-            pre.add(criteraiBuilder.equal(query.from(Films.class).get("realisateurs").get("id"), id));
+            pre.add(criteraiBuilder.equal(query.from(Film.class).get("realisateurs").get("id"), id));
             query.where(pre.toArray(new Predicate[pre.size()]));
             
             return manager.createQuery(query).getResultList();
@@ -55,10 +55,10 @@ public class RealisateursCRUD {
         }
     }
          /**@deprecated   */
-    public List<Films> getFilms(String name) {
+    public List<Film> getFilms(String name) {
         try {
             CriteriaBuilder criteraiBuilder = manager.getCriteriaBuilder();
-            CriteriaQuery<Films> query = criteraiBuilder.createQuery(Films.class);
+            CriteriaQuery<Film> query = criteraiBuilder.createQuery(Film.class);
             
             List<Predicate> pre = new ArrayList<Predicate>();
             

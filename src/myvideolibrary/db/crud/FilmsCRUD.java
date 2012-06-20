@@ -10,7 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import myvideolibrary.db.entity.Films;
+import myvideolibrary.db.entity.Film;
 
 /**
  *
@@ -21,11 +21,11 @@ public class FilmsCRUD {
     @PersistenceContext
     EntityManager manager;
     
-    public List<Films> getAll() {
+    public List<Film> getAll() {
         try {
             CriteriaBuilder criteraiBuilder = manager.getCriteriaBuilder();
-            CriteriaQuery<Films> query = criteraiBuilder.createQuery(Films.class);
-            query.from(Films.class);
+            CriteriaQuery<Film> query = criteraiBuilder.createQuery(Film.class);
+            query.from(Film.class);
             return manager.createQuery(query).getResultList();
         } catch (Exception e) {
             return null;

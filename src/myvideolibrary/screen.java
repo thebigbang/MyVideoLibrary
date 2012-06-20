@@ -8,7 +8,7 @@ import java.util.List;
 import myvideolibrary.db.crud.FilmsCRUD;
 import myvideolibrary.db.crud.GenresCRUD;
 import myvideolibrary.db.crud.RealisateursCRUD;
-import myvideolibrary.db.entity.Films;
+import myvideolibrary.db.entity.Film;
 import myvideolibrary.db.entity.Genre;
 import myvideolibrary.db.entity.Realisateur;
 
@@ -126,7 +126,7 @@ public class screen extends javax.swing.JFrame {
         // TODO add your handling code here:
         TypeDataLabel.setText("Liste des Films");
                 ListOfData.removeAll();
-        for (Films genre : new FilmsCRUD().getAll()) {
+        for (Film genre : new FilmsCRUD().getAll()) {
             ListOfData.add(this, genre);
         }
     }//GEN-LAST:event_FilmsButtonActionPerformed

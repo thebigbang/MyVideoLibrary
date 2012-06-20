@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="myvideodatabaseModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="myvideodatabaseModelStoreContainer">
+    <EntitySet Name="GenreSet" EntityType="myvideodatabaseModel.Store.GenreSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FilmsSet" EntityType="myvideodatabaseModel.Store.FilmsSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RealisateurSet" EntityType="myvideodatabaseModel.Store.RealisateurSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FilmsRealisateur" EntityType="myvideodatabaseModel.Store.FilmsRealisateur" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FilmsGenre" EntityType="myvideodatabaseModel.Store.FilmsGenre" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_FilmsRealisateur_Films" Association="myvideodatabaseModel.Store.FK_FilmsRealisateur_Films">
+      <End Role="Films" EntitySet="FilmsSet" />
+      <End Role="FilmsRealisateur" EntitySet="FilmsRealisateur" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FilmsRealisateur_Realisateur" Association="myvideodatabaseModel.Store.FK_FilmsRealisateur_Realisateur">
+      <End Role="Realisateur" EntitySet="RealisateurSet" />
+      <End Role="FilmsRealisateur" EntitySet="FilmsRealisateur" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FilmsGenre_Films" Association="myvideodatabaseModel.Store.FK_FilmsGenre_Films">
+      <End Role="Films" EntitySet="FilmsSet" />
+      <End Role="FilmsGenre" EntitySet="FilmsGenre" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FilmsGenre_Genre" Association="myvideodatabaseModel.Store.FK_FilmsGenre_Genre">
+      <End Role="Genre" EntitySet="GenreSet" />
+      <End Role="FilmsGenre" EntitySet="FilmsGenre" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="GenreSet">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nom" Type="longtext" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FilmsSet">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="titre" Type="longtext" Nullable="false" />
+    <Property Name="description" Type="longtext" Nullable="false" />
+    <Property Name="numerotation" Type="longtext" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RealisateurSet">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="longtext" Nullable="false" />
+    <Property Name="surname" Type="longtext" Nullable="false" />
+    <Property Name="biography" Type="longtext" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FilmsRealisateur">
+    <Key>
+      <PropertyRef Name="Films_id" />
+      <PropertyRef Name="Realisateur_id" />
+    </Key>
+    <Property Name="Films_id" Type="int" Nullable="false" />
+    <Property Name="Realisateur_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FilmsGenre">
+    <Key>
+      <PropertyRef Name="Films_id" />
+      <PropertyRef Name="Genre_id" />
+    </Key>
+    <Property Name="Films_id" Type="int" Nullable="false" />
+    <Property Name="Genre_id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_FilmsRealisateur_Films">
+    <End Role="Films" Type="myvideodatabaseModel.Store.FilmsSet" Multiplicity="1" />
+    <End Role="FilmsRealisateur" Type="myvideodatabaseModel.Store.FilmsRealisateur" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Films">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="FilmsRealisateur">
+        <PropertyRef Name="Films_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FilmsRealisateur_Realisateur">
+    <End Role="FilmsRealisateur" Type="myvideodatabaseModel.Store.FilmsRealisateur" Multiplicity="*" />
+    <End Role="Realisateur" Type="myvideodatabaseModel.Store.RealisateurSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Realisateur">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="FilmsRealisateur">
+        <PropertyRef Name="Realisateur_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FilmsGenre_Films">
+    <End Role="Films" Type="myvideodatabaseModel.Store.FilmsSet" Multiplicity="1" />
+    <End Role="FilmsGenre" Type="myvideodatabaseModel.Store.FilmsGenre" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Films">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="FilmsGenre">
+        <PropertyRef Name="Films_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FilmsGenre_Genre">
+    <End Role="FilmsGenre" Type="myvideodatabaseModel.Store.FilmsGenre" Multiplicity="*" />
+    <End Role="Genre" Type="myvideodatabaseModel.Store.GenreSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Genre">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="FilmsGenre">
+        <PropertyRef Name="Genre_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="myvideodatabaseModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="myvideodatabaseEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="GenreSet" EntityType="myvideodatabaseModel.Genre" />
+          <EntitySet Name="FilmsSet" EntityType="myvideodatabaseModel.Films" />
+          <EntitySet Name="RealisateurSet" EntityType="myvideodatabaseModel.Realisateur" />
+          <AssociationSet Name="FilmsRealisateur" Association="myvideodatabaseModel.FilmsRealisateur">
+            <End Role="Films" EntitySet="FilmsSet" />
+            <End Role="Realisateur" EntitySet="RealisateurSet" />
+          </AssociationSet>
+          <AssociationSet Name="FilmsGenre" Association="myvideodatabaseModel.FilmsGenre">
+            <End Role="Films" EntitySet="FilmsSet" />
+            <End Role="Genre" EntitySet="GenreSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="nom" Nullable="false" />
+          <NavigationProperty Name="Films" Relationship="myvideodatabaseModel.FilmsGenre" FromRole="Genre" ToRole="Films" />
+        </EntityType>
+        <EntityType Name="Films">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="titre" Nullable="false" />
+          <Property Type="String" Name="description" Nullable="false" />
+          <Property Type="String" Name="numerotation" Nullable="false" />
+          <NavigationProperty Name="Realisateur" Relationship="myvideodatabaseModel.FilmsRealisateur" FromRole="Films" ToRole="Realisateur" />
+          <NavigationProperty Name="Genre" Relationship="myvideodatabaseModel.FilmsGenre" FromRole="Films" ToRole="Genre" />
+        </EntityType>
+        <EntityType Name="Realisateur">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="name" Nullable="false" />
+          <Property Type="String" Name="surname" Nullable="false" />
+          <Property Type="String" Name="biography" Nullable="false" />
+          <NavigationProperty Name="Films" Relationship="myvideodatabaseModel.FilmsRealisateur" FromRole="Realisateur" ToRole="Films" />
+        </EntityType>
+        <Association Name="FilmsRealisateur">
+          <End Type="myvideodatabaseModel.Films" Role="Films" Multiplicity="*" />
+          <End Type="myvideodatabaseModel.Realisateur" Role="Realisateur" Multiplicity="*" />
+        </Association>
+        <Association Name="FilmsGenre">
+          <End Type="myvideodatabaseModel.Films" Role="Films" Multiplicity="*" />
+          <End Type="myvideodatabaseModel.Genre" Role="Genre" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="myvideodatabaseModelStoreContainer" CdmEntityContainer="myvideodatabaseEntities">
+    <EntitySetMapping Name="GenreSet">
+      <EntityTypeMapping TypeName="IsTypeOf(myvideodatabaseModel.Genre)">
+        <MappingFragment StoreEntitySet="GenreSet">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nom" ColumnName="nom" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FilmsSet">
+      <EntityTypeMapping TypeName="IsTypeOf(myvideodatabaseModel.Films)">
+        <MappingFragment StoreEntitySet="FilmsSet">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="titre" ColumnName="titre" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="numerotation" ColumnName="numerotation" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RealisateurSet">
+      <EntityTypeMapping TypeName="IsTypeOf(myvideodatabaseModel.Realisateur)">
+        <MappingFragment StoreEntitySet="RealisateurSet">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="surname" ColumnName="surname" />
+          <ScalarProperty Name="biography" ColumnName="biography" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="FilmsRealisateur" TypeName="myvideodatabaseModel.FilmsRealisateur" StoreEntitySet="FilmsRealisateur">
+      <EndProperty Name="Films">
+        <ScalarProperty Name="id" ColumnName="Films_id" />
+      </EndProperty>
+      <EndProperty Name="Realisateur">
+        <ScalarProperty Name="id" ColumnName="Realisateur_id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FilmsGenre" TypeName="myvideodatabaseModel.FilmsGenre" StoreEntitySet="FilmsGenre">
+      <EndProperty Name="Films">
+        <ScalarProperty Name="id" ColumnName="Films_id" />
+      </EndProperty>
+      <EndProperty Name="Genre">
+        <ScalarProperty Name="id" ColumnName="Genre_id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="DDLGenerationTemplate" Value="$(VSEFTools)\DBGen\SSDLToMySQL.tt" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="model" >
+        <EntityTypeShape EntityType="myvideodatabaseModel.Genre" Width="1.5" PointX="0.5" PointY="3.125" Height="1.4033821614583326" />
+        <EntityTypeShape EntityType="myvideodatabaseModel.Films" Width="1.5" PointX="2.375" PointY="0.5" Height="1.787985026041667" />
+        <EntityTypeShape EntityType="myvideodatabaseModel.Realisateur" Width="1.5" PointX="3.5" PointY="3.625" Height="1.9802864583333335" />
+        <AssociationConnector Association="myvideodatabaseModel.FilmsRealisateur">
+          <ConnectorPoint PointX="3.6875" PointY="2.4802864583333335" />
+          <ConnectorPoint PointX="3.6875" PointY="3.625" />
+        </AssociationConnector>
+        <AssociationConnector Association="myvideodatabaseModel.FilmsGenre">
+          <ConnectorPoint PointX="2.3749999999999996" PointY="2.672587890625" />
+          <ConnectorPoint PointX="2" PointY="3.125" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

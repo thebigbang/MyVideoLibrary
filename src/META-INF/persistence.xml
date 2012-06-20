@@ -5,6 +5,9 @@
     <class>myvideolibrary.db.entity.Films</class>
     <class>myvideolibrary.db.entity.Genre</class>
     <class>myvideolibrary.db.entity.Realisateur</class>
+    <class>myvideolibrary.db.entity.Realisateur_1</class>
+    <class>myvideolibrary.db.entity.Film</class>
+    <class>myvideolibrary.db.entity.Genre_1</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/MyVideoDatabase"/>
       <property name="javax.persistence.jdbc.password" value="16011991"/>
