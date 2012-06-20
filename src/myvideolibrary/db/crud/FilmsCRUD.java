@@ -31,4 +31,8 @@ public class FilmsCRUD {
             return null;
         }
     }
+    public void Create(Film f)
+    {
+        manager.persist(f);
+    }
 }

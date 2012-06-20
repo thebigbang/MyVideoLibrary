@@ -4,6 +4,7 @@
  */
 package myvideolibrary;
 
+import java.util.ArrayList;
 import java.util.List;
 import myvideolibrary.db.crud.FilmsCRUD;
 import myvideolibrary.db.crud.GenresCRUD;
@@ -40,6 +41,7 @@ public class screen extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         ListOfData = new javax.swing.JList();
         TypeDataLabel = new javax.swing.JLabel();
+        GENERATE = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,39 +76,52 @@ public class screen extends javax.swing.JFrame {
 
         TypeDataLabel.setText("#TypeData#");
 
+        GENERATE.setText("GENERATE");
+        GENERATE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GENERATEActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(FilmsButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(TypeDataLabel)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(FilmsButton)
+                        .addComponent(GenresButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TypeDataLabel)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(GenresButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(RealisateursButton)))))
+                        .addComponent(RealisateursButton)))
                 .addContainerGap(157, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(GENERATE)
+                .addGap(64, 64, 64))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(FilmsButton)
-                    .addComponent(GenresButton)
-                    .addComponent(RealisateursButton))
-                .addGap(24, 24, 24)
-                .addComponent(TypeDataLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(FilmsButton)
+                            .addComponent(GenresButton)
+                            .addComponent(RealisateursButton))
+                        .addGap(24, 24, 24)
+                        .addComponent(TypeDataLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(123, 123, 123)
+                        .addComponent(GENERATE)))
                 .addContainerGap(70, Short.MAX_VALUE))
         );
 
@@ -139,6 +154,32 @@ public class screen extends javax.swing.JFrame {
             ListOfData.add(this, genre);
         }
     }//GEN-LAST:event_RealisateursButtonActionPerformed
+
+    private void GENERATEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GENERATEActionPerformed
+        // TODO add your handling code here:
+        Genre ungenre=new Genre();
+        ungenre.setNom("action");
+        new GenresCRUD().create(ungenre);
+        
+        Realisateur real=new Realisateur();
+        real.setBiography("lorem ipsum dolor sit amet on da cliff");
+        real.setName("jean hyve");
+        real.setSurname("zorovtowitch");
+        
+        Film monfilm1=new Film();
+        monfilm1.setTitre("super film");
+        monfilm1.setDescription("ce film est un film descriptuon :p");
+        monfilm1.setNumerotation();
+        List<Genre> filmGender=new ArrayList<>();
+        filmGender.add(ungenre);
+        List<Realisateur> filmReal=new ArrayList<>();
+        filmReal.add(real);
+        monfilm1.setRealisateurList(filmReal);
+        monfilm1.setGenreList(filmGender);
+
+        
+        new FilmsCRUD().Create(monfilm1);
+    }//GEN-LAST:event_GENERATEActionPerformed
 
     /**
      * @param args the command line arguments
@@ -183,6 +224,7 @@ public class screen extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton FilmsButton;
+    private javax.swing.JButton GENERATE;
     private javax.swing.JButton GenresButton;
     private javax.swing.JList ListOfData;
     private javax.swing.JButton RealisateursButton;

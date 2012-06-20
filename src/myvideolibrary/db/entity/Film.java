@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import myvideolibrary.db.crud.FilmsCRUD;
 
 /**
  *
@@ -21,6 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Film.findAll", query = "SELECT f FROM Film f"),
     @NamedQuery(name = "Film.findById", query = "SELECT f FROM Film f WHERE f.id = :id")})
 public class Film implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -86,8 +88,17 @@ public class Film implements Serializable {
         return numerotation;
     }
 
-    public void setNumerotation(String numerotation) {
-        this.numerotation = numerotation;
+    public void setNumerotation()
+    {String titre=getTitre();
+        if(titre!="") setNumerotation(titre);
+    }
+    public void setNumerotation(String nomFilm) {
+        FilmsCRUD f = new FilmsCRUD();
+        int d = f.getAll().size();
+        Film fi = f.getAll().get(d - 1);
+        Long index = Long.parseLong(fi.numerotation.substring(1)) + 1;
+        String Sindex = nomFilm.substring(0, 1);
+        this.numerotation = Sindex.concat(index.toString());
     }
 
     @XmlTransient
@@ -132,5 +143,4 @@ public class Film implements Serializable {
     public String toString() {
         return "myvideolibrary.db.entity.Film[ id=" + id + " ]";
     }
-    
 }
