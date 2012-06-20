@@ -7,7 +7,6 @@ package myvideolibrary.db.entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -15,25 +14,14 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author thebigbang
  */
 @Entity
-@Table(name = "genreset")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Genre.findAll", query = "SELECT g FROM Genre g"),
-    @NamedQuery(name = "Genre.findById", query = "SELECT g FROM Genre g WHERE g.id = :id")})
 public class Genre implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @Lob
-    @Column(name = "nom")
     private String nom;
-    @JoinTable(name = "filmsgenre", joinColumns = {
-        @JoinColumn(name = "Genre_id", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "Films_id", referencedColumnName = "id")})
     @ManyToMany
     private List<Film> filmList;
 
@@ -98,5 +86,4 @@ public class Genre implements Serializable {
     public String toString() {
         return "myvideolibrary.db.entity.Genre[ id=" + id + " ]";
     }
-    
 }

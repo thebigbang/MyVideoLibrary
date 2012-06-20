@@ -7,7 +7,6 @@ package myvideolibrary.db.entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import myvideolibrary.db.crud.FilmsCRUD;
 
@@ -16,34 +15,18 @@ import myvideolibrary.db.crud.FilmsCRUD;
  * @author thebigbang
  */
 @Entity
-@Table(name = "filmsset")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Film.findAll", query = "SELECT f FROM Film f"),
-    @NamedQuery(name = "Film.findById", query = "SELECT f FROM Film f WHERE f.id = :id")})
 public class Film implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @Lob
-    @Column(name = "titre")
     private String titre;
-    @Basic(optional = false)
-    @Lob
-    @Column(name = "description")
     private String description;
-    @Basic(optional = false)
-    @Lob
-    @Column(name = "numerotation")
     private String numerotation;
-    @ManyToMany(mappedBy = "filmList")
+    @ManyToMany
     private List<Realisateur> realisateurList;
-    @ManyToMany(mappedBy = "filmList")
+    @ManyToMany
     private List<Genre> genreList;
 
     public Film() {
@@ -88,16 +71,21 @@ public class Film implements Serializable {
         return numerotation;
     }
 
-    public void setNumerotation()
-    {
-        String t=getTitre();
-        if(!"".equals(t)) setNumerotation(t);
+    public void setNumerotation() {
+        String t = getTitre();
+        if (!"".equals(t)) {
+            setNumerotation(t);
+        }
     }
+
     public void setNumerotation(String nomFilm) {
         FilmsCRUD f = new FilmsCRUD();
         int d = f.getAll().size();
-        Film fi = f.getAll().get(d - 1);
-        Long index = Long.parseLong(fi.numerotation.substring(1)) + 1;
+        Long index = 0l;
+        if (d > 0) {
+            Film fi = f.getAll().get(d - 1);
+            index = Long.parseLong(fi.numerotation.substring(1)) + 1;
+        }
         String Sindex = nomFilm.substring(0, 1);
         this.numerotation = Sindex.concat(index.toString());
     }

@@ -11,10 +11,7 @@ import myvideolibrary.db.crud.GenresCRUD;
 import myvideolibrary.db.crud.RealisateursCRUD;
 import myvideolibrary.db.entity.Film;
 import myvideolibrary.db.entity.Genre;
-import myvideolibrary.db.entity.JPA.GenreJpaController;
 import myvideolibrary.db.entity.Realisateur;
-import org.infinispan.transaction.tm.DummyTransactionManager;
-import org.infinispan.transaction.tm.DummyUserTransaction;
 
 /**
  *
@@ -172,7 +169,7 @@ public class screen extends javax.swing.JFrame {
         
         Film monfilm1=new Film();
         monfilm1.setTitre("super film");
-        monfilm1.setDescription("ce film est un film descriptuon :p");
+        monfilm1.setDescription("ce film est un film description :p");
         monfilm1.setNumerotation();
         List<Genre> filmGender=new ArrayList<>();
         filmGender.add(ungenre);
@@ -183,6 +180,7 @@ public class screen extends javax.swing.JFrame {
 
         
         new FilmsCRUD().Create(monfilm1);
+        
     }//GEN-LAST:event_GENERATEActionPerformed
 
     /**
