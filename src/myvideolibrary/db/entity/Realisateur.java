@@ -7,7 +7,6 @@ package myvideolibrary.db.entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -15,33 +14,15 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author thebigbang
  */
 @Entity
-@Table(name = "realisateurset")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Realisateur.findAll", query = "SELECT r FROM Realisateur r"),
-    @NamedQuery(name = "Realisateur.findById", query = "SELECT r FROM Realisateur r WHERE r.id = :id")})
 public class Realisateur implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @Lob
-    @Column(name = "name")
     private String name;
-    @Basic(optional = false)
-    @Lob
-    @Column(name = "surname")
     private String surname;
-    @Basic(optional = false)
-    @Lob
-    @Column(name = "biography")
     private String biography;
-    @JoinTable(name = "filmsrealisateur", joinColumns = {
-        @JoinColumn(name = "Realisateur_id", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "Films_id", referencedColumnName = "id")})
     @ManyToMany
     private List<Film> filmList;
 
@@ -124,5 +105,4 @@ public class Realisateur implements Serializable {
     public String toString() {
         return "myvideolibrary.db.entity.Realisateur[ id=" + id + " ]";
     }
-    
 }
