@@ -89,8 +89,9 @@ public class Film implements Serializable {
     }
 
     public void setNumerotation()
-    {String titre=getTitre();
-        if(titre!="") setNumerotation(titre);
+    {
+        String t=getTitre();
+        if(!"".equals(t)) setNumerotation(t);
     }
     public void setNumerotation(String nomFilm) {
         FilmsCRUD f = new FilmsCRUD();

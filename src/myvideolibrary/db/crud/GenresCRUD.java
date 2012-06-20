@@ -7,6 +7,8 @@ package myvideolibrary.db.crud;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -19,9 +21,15 @@ import myvideolibrary.db.entity.Genre;
  * @author thebigbang
  */
 public class GenresCRUD {
-    @PersistenceContext
+    @PersistenceContext(unitName="MyVideoLibraryPU")
     EntityManager manager;
     
+    
+    public GenresCRUD()
+    {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MyVideoLibraryPU");  
+        manager = emf.createEntityManager();
+    }
     public List<Genre> getAll() {
         try {
             CriteriaBuilder criteraiBuilder = manager.getCriteriaBuilder();
@@ -32,9 +40,12 @@ public class GenresCRUD {
             return null;
         }
     }
+    
     public void create(Genre g)
-    {
+    {        
+        manager.getTransaction().begin();
         manager.persist(g);
+        manager.getTransaction().commit();
     }
     /**@deprecated   */
     public List<Film> getFilms(Long id) {

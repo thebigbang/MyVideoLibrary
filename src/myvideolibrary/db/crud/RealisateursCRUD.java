@@ -7,6 +7,8 @@ package myvideolibrary.db.crud;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -20,9 +22,14 @@ import myvideolibrary.db.entity.Realisateur;
  * @author thebigbang
  */
 public class RealisateursCRUD {
-    @PersistenceContext
+    @PersistenceContext(unitName="MyVideoLibraryPU")
     EntityManager manager;
     
+    public RealisateursCRUD()
+    {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MyVideoLibraryPU");  
+        manager = emf.createEntityManager();
+    }
     public List<Realisateur> getAll() {
         try {
             CriteriaBuilder criteraiBuilder = manager.getCriteriaBuilder();
@@ -35,7 +42,9 @@ public class RealisateursCRUD {
     }
     public void create(Realisateur r)
     {
+        manager.getTransaction().begin();
         manager.persist(r);
+        manager.getTransaction().commit();
     }
     
     /**@deprecated   */

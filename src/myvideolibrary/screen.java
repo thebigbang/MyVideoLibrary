@@ -11,7 +11,10 @@ import myvideolibrary.db.crud.GenresCRUD;
 import myvideolibrary.db.crud.RealisateursCRUD;
 import myvideolibrary.db.entity.Film;
 import myvideolibrary.db.entity.Genre;
+import myvideolibrary.db.entity.JPA.GenreJpaController;
 import myvideolibrary.db.entity.Realisateur;
+import org.infinispan.transaction.tm.DummyTransactionManager;
+import org.infinispan.transaction.tm.DummyUserTransaction;
 
 /**
  *
@@ -165,6 +168,7 @@ public class screen extends javax.swing.JFrame {
         real.setBiography("lorem ipsum dolor sit amet on da cliff");
         real.setName("jean hyve");
         real.setSurname("zorovtowitch");
+        new RealisateursCRUD().create(real);
         
         Film monfilm1=new Film();
         monfilm1.setTitre("super film");
